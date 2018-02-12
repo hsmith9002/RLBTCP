@@ -1,0 +1,10 @@
+Package: rlbtcp
+Title: This package loads functions used in transcriptome reconstruction characterization
+Version: 0.0.0.9000
+Authors@R: person(“Harry”, “Smith”, email = “harry.smith@ucdenver.edu”, role = c("aut", "cre"))
+Description: This package loads a number of functions.
+Depends: R (>= 3.4.0)
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1.9000
