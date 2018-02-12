@@ -1,5 +1,5 @@
-
 #' Reading in RSEM output - Isoform
+#' 
 #' This function reads in the RSEM output for each sample and merges the data into one count matrix with rows as transcript IDs and columns as sample names
 #' @param dir Global directory. Often points to project start folder. This will be the Parent folder for the folder containing lists of file names for each rsem batch output
 #' @param dirs2 Directory pointing parent folder where RSEM output is
@@ -7,7 +7,8 @@
 #' @param N Numerical vector of batch numbers
 #' @keywords rsem
 #' @export
-#' @example rsem.read.iso()
+#' @example 
+#' rsem.read.iso()
 
 rsem.read.iso <- function(dir, dirs2, tissue, N) {
   for(h in unique(N)) {
