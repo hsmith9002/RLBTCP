@@ -4,7 +4,7 @@
 \alias{rsem.read.iso}
 \title{Reading in RSEM output - Isoform}
 \usage{
-rsem.read.iso(dir, dirs2, tissue, N)
+rsem.read.iso(dir, dirs2, tissue, N, qtype)
 }
 \arguments{
 \item{dir}{Global directory. Often points to project start folder. This will be the Parent folder for the folder containing lists of file names for each rsem batch output}
@@ -14,6 +14,8 @@ rsem.read.iso(dir, dirs2, tissue, N)
 \item{tissue}{Character value defining name of tissue in file path}
 
 \item{N}{Numerical vector of batch numbers}
+
+\item{qtype}{What quantitation type should the function read in. Can read counts or TPM}
 }
 \description{
 This function reads in the RSEM output for each sample and merges the data into one count matrix with rows as transcript IDs and columns as sample names
