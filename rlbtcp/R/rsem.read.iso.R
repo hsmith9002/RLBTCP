@@ -5,6 +5,7 @@
 #' @param dirs2 Directory pointing parent folder where RSEM output is
 #' @param tissue Character value defining name of tissue in file path
 #' @param N Numerical vector of batch numbers
+#' @param qtype What quantitation type should the function read in. Can read counts or TPM
 #' @keywords rsem
 #' @export
 #' @examples 
