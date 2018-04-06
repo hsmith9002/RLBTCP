@@ -6,12 +6,13 @@
 #' @param tissue Character value defining name of tissue in file path
 #' @param N Numerical vector of batch numbers
 #' @param qtype What quantitation type should the function read in. Can read counts or TPM
+#' @param filename file name for output as RData file
 #' @keywords rsem
 #' @export
 #' @examples 
 #' rsem.read.iso()
 
-rsem.read.iso <- function(dir, dirs2, tissue, N, qtype) {
+rsem.read.iso <- function(dir, dirs2, tissue, N, qtype, filename) {
   for(h in unique(N)) {
     ## Define "not in" function
     '%!in%' <- function(x,y)!('%in%'(x,y))
@@ -37,7 +38,7 @@ rsem.read.iso <- function(dir, dirs2, tissue, N, qtype) {
       if(h!=N[1]) cntsMerged = merge(cntsMerged,cntsT,by="transcript_id")
     
       ## save cnts
-      save(list = c("cntsMerged"), file = paste(dir, "Transcript_Reconstruction/", tissue, "/quantitation/",  "cnts.Merged.isoforms", ".Rdata", sep = ""))
+      save(list = c("cntsMerged"), file = paste(dir, "Transcript_Reconstruction/", tissue, "/quantitation/",  filename, ".Rdata", sep = ""))
     } else{
       ## Read in transcript level data
       for(i in sampleID){
@@ -54,7 +55,7 @@ rsem.read.iso <- function(dir, dirs2, tissue, N, qtype) {
       if(h!=N[1]) cntsMerged = merge(cntsMerged,cntsT,by="transcript_id")
       
       ## save cnts
-      save(list = c("cntsMerged"), file = paste(dir, "Transcript_Reconstruction/", tissue, "/quantitation/",  "tpm.Merged.isoforms", ".Rdata", sep = ""))
+      save(list = c("cntsMerged"), file = paste(dir, "Transcript_Reconstruction/", tissue, "/quantitation/",  filename, ".Rdata", sep = ""))
     }
   }
 }
