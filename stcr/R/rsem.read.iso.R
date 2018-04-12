@@ -18,7 +18,7 @@ rsem.read.iso <- function(dir, dirs2, tissue, N, qtype, filename) {
     '%!in%' <- function(x,y)!('%in%'(x,y))
     
     ## Read in batch file list and extract unique strain names with replicate number attached
-    flist <- as.character(read.table(file = paste(dir, "metadata/", "RSEM.", "batch", h, ".filelist.txt", sep = ""), header = F)$V1)
+    flist <- as.character(read.table(file = paste(dir, "metadata/", tissue, "/", "RSEM.", "batch", h, ".filelist.txt", sep = ""), header = F)$V1)
     sampleID <- unique(unlist(lapply(strsplit(flist,split=".",fixed=TRUE),function(a) a[1])))
     sampleID <- sampleID[which(sampleID %!in% c("prep", paste("prepL", h, sep = ""), "rsem", "RSEM", paste("rsemp", c(1:10), sep = ""), paste("rsem", c(1:10), sep = ""), "rsem_redo", "new_rsem", paste("rsemL", N, sep = "")))]
     
