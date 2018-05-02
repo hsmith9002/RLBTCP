@@ -21,6 +21,22 @@ rsem.read.iso <- function(dir, dirs2, tissue, N, qtype, level, filename) {
     ## Read in batch file list and extract unique strain names with replicate number attached
     flist <- as.character(read.table(file = paste(dir, "metadata/", tissue, "/", "RSEM.", "batch", h, ".filelist.txt", sep = ""), header = F)$V1)
     sampleID <- unique(unlist(lapply(strsplit(flist,split=".",fixed=TRUE),function(a) a[1])))
+    sampleID <- sampleID[which(sampleID %!in% c("prep", paste("prepL", h, sep = ""), "rsem", "RSEM", paste("rsemp", c(1:10), sep = ""), paste("rsemb", c(1:10), sep = ""), paste("rsem", c(1:10), sep = ""), "rsem_redo", "new_rsem", paste("rsemL", N, sep = "")))]
+    fcheck <- rep(NA, length(sampleID))
+    for(v in 1:length(sampleID)){
+      if(paste(sampleID[v], ".", "isoforms.results", sep = "") %in% flist) {fcheck[v] = 1.0} else {fcheck[v] = 0.0}
+    }
+    fcheck <- ifelse(fcheck == 1, TRUE, FALSE)
+    if(sum(fcheck) != length(sampleID)) {stop(paste('There is no .results file present in directory for one of the strains: ', sampleID[!fcheck], "\n", sep = ""))}
+  }
+  
+  for(h in unique(N)) {
+    ## Define "not in" function
+    '%!in%' <- function(x,y)!('%in%'(x,y))
+    
+    ## Read in batch file list and extract unique strain names with replicate number attached
+    flist <- as.character(read.table(file = paste(dir, "metadata/", tissue, "/", "RSEM.", "batch", h, ".filelist.txt", sep = ""), header = F)$V1)
+    sampleID <- unique(unlist(lapply(strsplit(flist,split=".",fixed=TRUE),function(a) a[1])))
     sampleID <- sampleID[which(sampleID %!in% c("prep", paste("prepL", h, sep = ""), "rsem", "RSEM", paste("rsemp", c(1:10), sep = ""), paste("rsem", c(1:10), sep = ""), "rsem_redo", "new_rsem", paste("rsemL", N, sep = "")))]
     if(level == "transcript"){
       if(qtype == "counts") {
@@ -33,11 +49,11 @@ rsem.read.iso <- function(dir, dirs2, tissue, N, qtype, level, filename) {
           if(i!=sampleID[1]) cntsT = merge(cntsT,y,by="transcript_id")
         }
         colnames(cntsT)[-1] <- paste(colnames(cntsT)[-1], "_batch", h, sep = "")
-      
+        
         ## Merge datasets
         if(h==N[1]) cntsMerged = cntsT
         if(h!=N[1]) cntsMerged = merge(cntsMerged,cntsT,by="transcript_id")
-      
+        
         ## save cnts
         save(list = c("cntsMerged"), file = paste(dir, "Transcript_Reconstruction/", tissue, "/quantitation/",  filename, ".Rdata", sep = ""))
       } else{
