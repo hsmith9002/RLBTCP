@@ -21,10 +21,10 @@ rsem.read.iso <- function(dir, dirs2, tissue, N, qtype, level, filename) {
     ## Read in batch file list and extract unique strain names with replicate number attached
     flist <- as.character(read.table(file = paste(dir, "metadata/", tissue, "/", "RSEM.", "batch", h, ".filelist.txt", sep = ""), header = F)$V1)
     sampleID <- unique(unlist(lapply(strsplit(flist,split=".",fixed=TRUE),function(a) a[1])))
-    sampleID <- sampleID[which(sampleID %!in% c("prep", paste("prepL", h, sep = ""), "rsem", "RSEM", paste("rsemp", c(1:10), sep = ""), paste("rsemb", c(1:10), sep = ""), paste("rsem", c(1:10), sep = ""), "rsem_redo", "new_rsem", paste("rsemL", N, sep = "")))]
+    sampleID <- sampleID[which(sampleID %!in% c("prep", paste("prepL", h, sep = ""), "rsem", "rsemb1r1", "RSEM", paste("rsemp", c(1:10), sep = ""), paste("rsemb", c(1:10), sep = ""), paste("rsem", c(1:10), sep = ""), "rsem_redo", "new_rsem", paste("rsemL", N, sep = "")))]
     fcheck <- rep(NA, length(sampleID))
     for(v in 1:length(sampleID)){
-      if(paste(sampleID[v], ".", "isoforms.results", sep = "") %in% flist) {fcheck[v] = 1.0} else {fcheck[v] = 0.0}
+      if(c(paste(sampleID[v], ".", "isoforms.results", sep = "")) %in% flist) {fcheck[v] = 1.0} else {fcheck[v] = 0.0}
     }
     fcheck <- ifelse(fcheck == 1, TRUE, FALSE)
     if(sum(fcheck) != length(sampleID)) {stop(paste('There is no .results file present in directory for one of the strains: ', sampleID[!fcheck], "\n", sep = ""))}
@@ -37,7 +37,7 @@ rsem.read.iso <- function(dir, dirs2, tissue, N, qtype, level, filename) {
     ## Read in batch file list and extract unique strain names with replicate number attached
     flist <- as.character(read.table(file = paste(dir, "metadata/", tissue, "/", "RSEM.", "batch", h, ".filelist.txt", sep = ""), header = F)$V1)
     sampleID <- unique(unlist(lapply(strsplit(flist,split=".",fixed=TRUE),function(a) a[1])))
-    sampleID <- sampleID[which(sampleID %!in% c("prep", paste("prepL", h, sep = ""), "rsem", "RSEM", paste("rsemp", c(1:10), sep = ""), paste("rsem", c(1:10), sep = ""), "rsem_redo", "new_rsem", paste("rsemL", N, sep = "")))]
+    sampleID <- sampleID[which(sampleID %!in% c("prep", paste("prepL", h, sep = ""), "rsem", "rsemb1r1", "RSEM", paste("rsemp", c(1:10), sep = ""), paste("rsem", c(1:10), sep = ""), "rsem_redo", "new_rsem", paste("rsemL", N, sep = "")))]
     if(level == "transcript"){
       if(qtype == "counts") {
         ## Read in transcript level data
