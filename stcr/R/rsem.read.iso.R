@@ -7,13 +7,14 @@
 #' @param N Numerical vector of batch numbers
 #' @param qtype What quantitation type should the function read in. Can read counts or TPM
 #' @param level Should the function generate expression data at the gene level or transcript level
+#' @param location name of folder that holds target .results files
 #' @param filename file name for output as RData file
 #' @keywords rsem
 #' @export
 #' @examples 
 #' rsem.read.iso()
 
-rsem.read.iso <- function(dir, dirs2, tissue, N, qtype, level, filename) {
+rsem.read.iso <- function(dir, dirs2, tissue, N, qtype, level, location, filename) {
   for(h in unique(N)) {
     ## Define "not in" function
     '%!in%' <- function(x,y)!('%in%'(x,y))
@@ -42,7 +43,7 @@ rsem.read.iso <- function(dir, dirs2, tissue, N, qtype, level, filename) {
       if(qtype == "counts") {
         ## Read in transcript level data
         for(i in sampleID){
-          x = read.table(file=paste(dirs2, "batch", h, "/RI.reconst.v1/",i,".isoforms.results",sep=""),sep="\t",header=TRUE)
+          x = read.table(file=paste(dirs2, "batch", h, "/", location, "/",i,".isoforms.results",sep=""),sep="\t",header=TRUE)
           y = data.frame(transcript_id = x$transcript_id, i=x$expected_count)
           colnames(y)[2] = i
           if(i==sampleID[1]) cntsT = y
@@ -59,7 +60,7 @@ rsem.read.iso <- function(dir, dirs2, tissue, N, qtype, level, filename) {
       } else{
         ## Read in transcript level data
         for(i in sampleID){
-          x = read.table(file=paste(dirs2, "batch", h, "/RI.reconst.v1/",i,".isoforms.results",sep=""),sep="\t",header=TRUE)
+          x = read.table(file=paste(dirs2, "batch", h, "/", location, "/",i,".isoforms.results",sep=""),sep="\t",header=TRUE)
           y = data.frame(transcript_id = x$transcript_id, i=x$TPM)
           colnames(y)[2] = i
           if(i==sampleID[1]) cntsT = y

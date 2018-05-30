@@ -4,7 +4,7 @@
 \alias{rsem.read.iso}
 \title{Reading in RSEM output - Isoform}
 \usage{
-rsem.read.iso(dir, dirs2, tissue, N, qtype, level, filename)
+rsem.read.iso(dir, dirs2, tissue, N, qtype, level, location, filename)
 }
 \arguments{
 \item{dir}{Global directory. Often points to project start folder. This will be the Parent folder for the folder containing lists of file names for each rsem batch output}
@@ -18,6 +18,8 @@ rsem.read.iso(dir, dirs2, tissue, N, qtype, level, filename)
 \item{qtype}{What quantitation type should the function read in. Can read counts or TPM}
 
 \item{level}{Should the function generate expression data at the gene level or transcript level}
+
+\item{location}{name of folder that holds target .results files}
 
 \item{filename}{file name for output as RData file}
 }
