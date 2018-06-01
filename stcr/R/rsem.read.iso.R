@@ -80,7 +80,7 @@ rsem.read.iso <- function(dir, dirs2, tissue, N, qtype, level, location, filenam
       if(qtype == "counts") {
         ## Read in transcript level data
         for(i in sampleID){
-          x = read.table(file=paste(dirs2, "batch", h, "/RI.reconst.v1/",i,".genes.results",sep=""),sep="\t",header=TRUE)
+          x = read.table(file=paste(dirs2, "batch", h, "/", location, "/",i,".genes.results",sep=""),sep="\t",header=TRUE)
           y = data.frame(gene_id = x$gene_id, i=x$expected_count)
           colnames(y)[2] = i
           if(i==sampleID[1]) cntsG = y
@@ -97,7 +97,7 @@ rsem.read.iso <- function(dir, dirs2, tissue, N, qtype, level, location, filenam
       } else{
         ## Read in transcript level data
         for(i in sampleID){
-          x = read.table(file=paste(dirs2, "batch", h, "/RI.reconst.v1/",i,".genes.results",sep=""),sep="\t",header=TRUE)
+          x = read.table(file=paste(dirs2, "batch", h,"/", location, "/",i,".genes.results",sep=""),sep="\t",header=TRUE)
           y = data.frame(gene_id = x$gene_id, i=x$TPM)
           colnames(y)[2] = i
           if(i==sampleID[1]) cntsG = y
